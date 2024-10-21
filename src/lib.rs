@@ -1,6 +1,5 @@
 //! MKDB toy database.
 
-#![feature(non_null_convenience)]
 #![feature(debug_closure_helpers)]
 #![feature(allocator_api)]
 #![feature(map_try_insert)]
@@ -10,10 +9,9 @@
 #![feature(get_many_mut)]
 #![feature(map_many_mut)]
 #![feature(trait_alias)]
-#![feature(pointer_is_aligned)]
+#![feature(pointer_is_aligned_to)]
 #![feature(buf_read_has_data_left)]
-#![feature(option_take_if)]
-#![feature(exclusive_range_pattern)]
+#![feature(iterator_try_collect)]
 
 mod db;
 mod os;

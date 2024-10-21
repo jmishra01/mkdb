@@ -395,15 +395,19 @@ impl Cache {
         &mut self,
         pages: [PageNumber; N],
     ) -> Option<[&mut MemPage; N]> {
-        self.pages.get_many_mut(pages.each_ref()).map(|frame_ids| {
-            self.buffer
-                .get_many_mut(frame_ids.map(|frame_id| *frame_id))
-                .unwrap()
-                .map(|frame| {
+        self.buffer
+            .get_many_mut({
+                self.pages
+                    .get_many_mut(pages.each_ref())
+                    .map(|frame_id| *frame_id.unwrap())
+            })
+            .ok()
+            .map(|frames| {
+                frames.map(|frame| {
                     frame.set(REF_FLAG | DIRTY_FLAG);
                     &mut frame.page
                 })
-        })
+            })
     }
 
     /// Returns the [`FrameId`] of `page_number` and automatically sets its ref
